@@ -4,7 +4,7 @@ Use this reference when the user asks for `n` image prompts, wants to copy each 
 
 ## Core decision
 
-Treat `n` requested images as `n` independent render requests. The primary deliverable must be one self-contained JSON object per image. Do not make a root `image_prompt_set` object with an `images` array the only copy-paste artifact.
+Treat `n` requested images as `n` independent render requests. When JSON is requested, deliver one self-contained JSON object per image. Otherwise web UI delivery uses separate flat prompts; do not force JSON. Do not make a root `image_prompt_set` object with an `images` array the only copy-paste artifact.
 
 A manifest or optional index may be included after the standalone objects, but it must not be required to interpret any individual object. Each object must work when copied alone into a fresh chat or image-generation request.
 
@@ -48,7 +48,7 @@ The exact field names may be adapted, but the object must remain valid JSON and 
 
 ## Single-image guardrails
 
-Put a positive output instruction near the beginning and end of `prompt`:
+Use one concise single-image instruction; do not repeat long guardrails. The longer examples below are troubleshooting options only:
 
 ```text
 Generate exactly one standalone still image on one continuous full-frame canvas. Use only this single scene. Output one image only.
@@ -84,7 +84,7 @@ If no reference image is available, state that continuity is an approximation an
 
 ## Platform length handling
 
-- ChatGPT and Gemini: use the full standalone JSON when the interface accepts structured prompt text. The object can include structured fields plus a detailed `prompt`.
+- ChatGPT and Gemini: use JSON only when requested; default to a coherent flat prompt. Avoid duplicating the full brief and prompt in text sent to the image UI.
 - Grok or any interface with a shorter input limit: emit a compact standalone JSON containing `image_id`, `task`, `output`, `prompt`, and `negative_prompt`. Preserve the essential face, wardrobe, scene, camera, and lighting details inside `prompt`; remove explanatory metadata first.
 - OpenClaw, Hermes, Codex, and OhMyPi: use one standalone object per tool call or wrap one object's `prompt` and `negative_prompt`; do not pass a multi-image manifest as one generation request.
 

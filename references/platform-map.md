@@ -1,42 +1,23 @@
-# Platform map
+# Platform-specific prompt compilation
 
-Cung mot FLAT PROMPT lam noi dung chinh. Chi doi vo boc, do dai va syntax khi platform can. Neu user yeu cau JSON hoac dua JSON dau vao, giu them PRODUCTION SPEC lam brief; khong thay the FLAT PROMPT bang JSON.
+Select target UI, image model if known, and operation (new image, reference-based new view, or edit). Preserve one canonical intent lock, but compile a separate prompt for the destination. Do not assume a shared wrapper gives equivalent results.
 
-Neu user chi ro nen tang, hoac da bao prompt bi tu choi, doc them `references/platform-safety.md` truoc khi chon wrapper. Khi do uu tien safe wording va co the xuat `SAFE RETRY PROMPT`; khong lap lai negative co tu nhay cam tren UI co bo loc nhay.
+These are editorial starting budgets, not vendor input limits or guarantees. Count the actual submitted text including wrappers/JSON. If the UI reports a limit, obey its measured character limit.
 
-## ChatGPT web / Gemini web / Grok web
+| Target | Starting length | Form and priorities |
+|---|---|---|
+| Flow / Nano Banana Pro | 100–180 words for master; 60–120 for reference follow-ups | Natural sentences, one scene/action/crop, lighting with protected skin tone; attach master image. Read flow-nano-banana.md. |
+| Gemini image UI | 90–180 words | Describe the scene coherently; attach references with explicit roles; use local edit instructions for corrections. Verify model selection in UI rather than assuming Pro. |
+| Grok web / Imagine | 60–110 words, aim around 700 characters when practical | Hero identity, outfit, action/crop, light. Plain text; no JSON or long negative list unless requested. This character target is a heuristic, not a documented cap; preserve locks even if longer. |
+| ChatGPT image UI | 120–220 words when needed | Natural-language art direction; reference roles and precise edit constraints. Avoid repeating structured spec in submitted prompt. |
+| Midjourney | Concise visual clauses | Add only requested/current supported parameters; reference syntax depends on selected version. Verify before claiming syntax. |
+| Flux / local | Depends on model/workflow | Subject/action/material/light in priority order; use native settings for dimensions; separate negative field only if supported. |
+| OpenClaw / Hermes / Codex / OhMyPi | Compile for their actual image tool | These are execution agents, not image models. Send the destination prompt in its tool schema; never send the entire brief/manifest as one render. |
 
-Dat truoc 1 cau lenh:
+For a named destination deliver that prompt first, with settings outside the copy block. Do not produce unused full-length variants. For an unspecified target give one general prompt and short routing notes.
 
-`Create one still image. Follow the prompt exactly. Do not add text, caption, or extra people.`
+Grok compression: remove wrappers, duplicate locks, camera numerics, explanations and negative lists first. Keep age supplied by user, identity, wardrobe, scene and requested action. If too long for the observed cap, report any unavoidable tradeoff instead of silently dropping hard locks. Do not promise that English always outperforms Vietnamese.
 
-Roi dan FLAT PROMPT + Negative.
+Multi-image web requests: one independent flat prompt per image. JSON is optional and only delivered when requested. Reference-based prompts explicitly require an attached master; without it, provide a text-only fallback and state that exact face continuity is unverified.
 
-Grok web / Imagine hieu photoreal + camera mm tot. Gemini hay them chu - nhan manh no text khi user khong yeu cau chu. ChatGPT hay lam dep da - nhan manh pores, natural texture, no beautify.
-
-## Grok Imagine
-
-Dung FLAT PROMPT day du neu prompt can chi tiet vat lieu va camera; dung OPTIONAL SHORT khi giao dien hoac token budget ngan. Aspect noi ro 4:5 hoac 9:16. Khong dua JSON vao prompt paste tru khi user yeu cau.
-
-## OpenClaw / Hermes / Codex / OhMyPi
-
-Agent hay lo prompt. Boc:
-
-```text
-TASK: write-or-call image prompt only unless user asked to generate.
-PROMPT:
-[FLAT]
-NEGATIVE:
-[NEG]
-RULES: one image, adult subject, no added logos, keep wardrobe.
-```
-
-Neu agent co tool gen, user phai noi "gen". Neu chi xin prompt, dung lai o text.
-
-## Midjourney (neu user hoi)
-
-Them `--ar 4:5 --stylize 100` (studio) hoac `--ar 9:16`. Negative thanh `--no plastic skin, text, logo, extra fingers`.
-
-## Flux / local
-
-Giu FLAT. Strength cua natural language; dua subject, pose, fabric, light, camera va color len som. Neu dung JSON de quan ly workflow, map cac field sang prompt truoc khi gui model.
+Read platform-safety.md for actual refusals. Do not treat ordinary fashion neckline details as an instruction to change the user's wardrobe preemptively.

@@ -1,19 +1,36 @@
 ---
 name: raw-prompt-to-pro
-description: Bien prompt tao anh tho thanh brief nhiep anh chi tiet, prompt phang paste-ready, va JSON standalone cho tung anh tren ChatGPT, Gemini, Grok, Midjourney, Flux, OpenClaw, Hermes, Codex, va OhMyPi. Khong tu gen anh tru khi user yeu cau ro.
+description: Nang cap prompt tao anh da nen tang va prompt video Google Flow cho cycling, yoga, dance, fashion; dung anh tham chieu de giu nhan vat, tach prompt anh dau va motion. Xuat prompt phang paste-ready, JSON khi duoc yeu cau. Khong tu gen media khi chi xin prompt.
 metadata:
   type: workflow
-  version: "1.4"
+  version: "1.9"
   output: flat-prompt-and-optional-production-spec
 ---
 
 # Raw prompt to pro
 
-Ban la pipeline nang cap prompt tao anh theo tu duy cua nhiep anh gia va art director. Y tuong, nhan vat, trang phuc, mood, muc do sexy/SFW, reference va cac chi tiet da duoc user chot la hard lock. Khong tu gen anh tru khi user noi ro "gen anh" / "tao anh".
+Ban la pipeline nang cap prompt tao anh theo tu duy cua nhiep anh gia va art director. Y tuong, nhan vat, trang phuc, mood, muc do sexy/SFW, reference va cac chi tiet da duoc user chot la hard lock. Chi gen khi user yeu cau tao anh hoac thu/toi uu truc tiep bang nen tang tao anh; yeu cau viet prompt don thuan khong cho phep tu gen.
 
 Muc tieu la chuyen mot prompt tho thanh mot brief co the dung ngay: co chu the ro, pose co the thuc hien, trang phuc co vat ly, bo cuc, anh sang, goc may, mau anh va xu ly hau ky. Moi chi tiet phai phuc vu mot trong cac phan nay; khong ke dai bang tinh tu chung chung.
 
 ## Khi nao chay
+
+### Google Flow video
+
+Khi user xin prompt video Flow, image-to-video, continuity nhan vat, cycling/yoga/dance/fashion: doc [references/flow-video-prompt-kit.md](references/flow-video-prompt-kit.md). Doc [references/flow-video-research.md](references/flow-video-research.md) khi can nguon repo, doi chieu model/mode hoac phan biet kinh nghiem voi du kien. Phan video nay khong dung pipeline 10 lop tao anh ben duoi cho motion prompt.
+
+Khi can cung co motion dance/fashion/cycling hoac lam footage Facebook Reels/TikTok, doc [references/motion-social-kit.md](references/motion-social-kit.md): prerequisites, 12 motion candidates va lop hook/action/payoff/CTA ngoai generation. Khi user bao ket qua khong on dinh hoac yeu cau test, doc [references/video-stability-test-plan.md](references/video-stability-test-plan.md). Day la ung vien chua test, khong coi research/loi agent la motion pass. Khong suy tran model hoac nguyen nhan kien truc tu cac run fail; khong dung montage/speedup/nhac de chung minh sua cadence. Uu tien feedback va asset that cua task, khong ap outfit/goc Linh cho category khac.
+
+- Chon surface/model/mode that; canvas firstFrame khong tu dong co ingredients, end frame hay motion reference. Khong bia API/payload.
+- Anh dau/reference chua identity va outfit. I2V uu tien motion, contact points va mot camera operation; khong lap mo ta ngoai hinh dai mac dinh. Text-only scene/reference brief van can chi tiet tu du.
+- Tao mot prompt rieng moi clip, prerequisite pose/goc/asset ngoai prompt; settings va timeline bien tap ngoai prompt. Giữ intent/body/outfit user chot, khong tu dien so do.
+- Mau trong bo kit la ung vien chua test, khong hua face-lock, cadence, beat-sync hay chat luong. Danh gia bang media that va feedback; khong coi tu 'fast' hoac RPM la bang chung.
+- Voi motion prompt, uu tien chi tiet co the quan sat: mot action chinh, weight/contact/khop va phan ung cua torso, mot camera operation, chuyen dong moi truong co nguyen nhan, bieu cam nho neu can, va continuity can giu. Khong nhat thiet nhan du 6 muc vao moi clip; bo muc khong phuc vu shot.
+- Dance can thay du cac diem tiep xuc va du khong gian cho bien do dong tac. Mo ta weight transfer, support foot, momentum va phan ung toc/quan ao/bong do cu the hon cac cum chung chung nhu `realistic physics`. BPM/timestamp chi la creative intent neu khong co audio/reference duoc truyen that; khong coi la bang chung sync.
+- Lenh slash, ma rut gon va ten tinh nang tu thu vien cong dong phai duoc xac minh tren dung surface/model truoc khi dung. Khong dua `motion0`, `ref+camera`, `/dollyin` hay ten model/tinh nang chua xac minh vao artifact paste-ready mac dinh.
+- Khong sinh media khi user chi xin research/prompt. Khi test duoc yeu cau, theo workspace continuity va workflow canvas neu co; moi luot paid manual, khong retry vo han.
+
+### Image prompts
 
 User dua mot cau tho, prompt dang so, JSON, hoac yeu cau "viet prompt dep", "nang cap prompt", "flatten JSON", "prompt nhu tho chup anh" va muon ban dung duoc tren chat web hoac agent (OpenClaw, Hermes, Codex, OhMyPi, ChatGPT, Gemini, Grok, Midjourney, Flux).
 
@@ -68,7 +85,7 @@ Khong bat user doc mot form tieng Anh khi dau vao la tieng Viet. Cac nhan noi bo
 - Subject nguoi phai la nguoi truong thanh. Khong bien subject thanh teen, schoolgirl, childlike, hoac co ve tre con.
 - Bao toan muc do SFW/sexy ma user da dat. Neu user noi sexy ma khong co yeu cau explicit, dich thanh silhouette fitted, neckline, body angle, weight shift va fabric tension; khong them hanh vi tinh duc, khoa than, hoac fetish.
 - Khong nhồi 6 panel / nhieu concept trong 1 prompt tru khi user xin set. Neu co nhieu panel, tach tung panel co face-lock va wardrobe-lock chung.
-- Khi user xin `n` anh de copy/paste, coi do la `n` lan render doc lap. Xuat mot JSON standalone tu du cho moi anh, khong de object do phu thuoc vao `images` array, `global lock` o object khac, hoac ghi chu `xem prompt truoc`. Doc `references/standalone-json.md`.
+- Khi user xin `n` anh de copy/paste, coi do la `n` lan render doc lap. Xuat mot prompt phang tu du cho moi anh; chi them JSON standalone khi user yeu cau JSON/schema, khong de object do phu thuoc vao `images` array, `global lock` o object khac, hoac ghi chu `xem prompt truoc`. Chi doc `references/standalone-json.md` khi can JSON.
 - Moi JSON standalone phai lap lai hard-lock ve identity, face, hair, makeup, wardrobe, setting va output count trong chinh object do. Neu user can cung mot nhan vat qua nhieu lan render, them `identity_reference` va noi ro anh tham chieu giup tang do dong nhat nhung khong dam bao trung mat tuyet doi.
 - Khong output JSON-only trong AUTO va buoc final. Luon co FLAT PROMPT de paste. Ngoai le: luot dau cua `JSON FORM` duoc output JSON-only de user dien; sau khi hoan tat phai xuat them FLAT PROMPT. Chi them PRODUCTION SPEC khi user dua JSON, yeu cau JSON/schema, hoac can brief co cau truc.
 - Khong copy nguyen van prompt mau cua user khac. Lay phuong phap, khong lay noi dung.
@@ -96,9 +113,9 @@ Rut cac truong ben duoi. O nao user da noi thi lock. O nao thieu thi dien mac di
 
 Hoi lai chi khi thieu hard lock ma sai se hu y (nam/nu hoac identity, SFW vs explicit, reference anh co bat buoc khong, mot trong nhieu subject). Toi da 3 cau. Neu van co the lam prompt hop ly, ghi infer va tiep tuc.
 
-### 1. Expand theo 10 lop (bat buoc)
+### 1. Plan theo 10 lop, render theo nen tang
 
-Viet du 10 lop trong ban spec ngan, roi flatten. Doc `references/expansion-recipe.md` de chon chi tiet phu hop; doc `references/production-spec.md` khi can schema JSON; doc `references/guided-form.md` khi user dung command PROMPT FORM; doc `references/json-form.md` khi user dung JSON FORM.
+Dung 10 lop nhu checklist noi bo; chi xuat chi tiet co the thay trong khung hinh. Khong bat prompt paste phai chua du 10 lop. Chon nen tang va che do text-to-image/reference/edit truoc khi flatten; doc `references/platform-map.md`. Doc `references/expansion-recipe.md` de chon chi tiet phu hop; doc `references/production-spec.md` khi can schema JSON; doc `references/guided-form.md` khi user dung command PROMPT FORM; doc `references/json-form.md` khi user dung JSON FORM.
 
 1. Intent and identity - subject, adult age band only when known, region/ethnicity only when provided, expression, hair, face, skin texture; pores and peach fuzz only when realism is wanted.
 2. Body language - stance, weight distribution, hip/shoulder axis, torso rotation, elbow and wrist position, gaze direction, expression, contact with wall/prop.
@@ -115,7 +132,7 @@ Chi tiet camera va mau phai phuc vu cung mot concept. Khong gan 85mm, shallow Do
 
 ### 2. Xuat dung format nay
 
-Mac dinh output cac khoi sau. Ghi chu va nhan giai thich theo ngon ngu chinh cua user. Prompt flatten English (da so model web hieu tot hon), tru khi user yeu cau prompt theo ngon ngu dau vao; khi do them ban English neu no giup model hieu tot hon. Neu user dua JSON hoac yeu cau format co cau truc, them `PRODUCTION SPEC` theo `references/production-spec.md`; `raw_prompt` trong spec phai trung y voi FLAT PROMPT.
+Day la format tong quat; voi nen tang dich da ro, prompt cua nen tang do la artifact chinh. NEGATIVE, PLATFORM VARIANTS va OPTIONAL SHORT chi them khi co ich/duoc yeu cau; Flow khong can khoi negative dai rieng. Ghi chu va nhan giai thich theo ngon ngu chinh cua user. Prompt flatten mac dinh English de nhat quan, khong khang dinh luon tot hon tieng Viet, tru khi user yeu cau prompt theo ngon ngu dau vao; khi do them ban English neu no giup model hieu tot hon. Neu user dua JSON hoac yeu cau format co cau truc, them `PRODUCTION SPEC` theo `references/production-spec.md`; `raw_prompt` trong spec phai trung y voi FLAT PROMPT.
 
 ```text
 INTENT LOCK
@@ -126,13 +143,13 @@ PRODUCTION SPEC (optional)
 { ... }
 
 FLAT PROMPT
-[mot doan, thuong 180-320 tu cho prompt chi tiet; prompt don gian ngan hon, khong them chu cho du dai]
+[mot doan theo budget nen tang trong platform-map; giu hard lock, khong them chu cho du dai]
 
 NEGATIVE
 [mot dong]
 
 PLATFORM VARIANTS
-- ChatGPT / Gemini / Grok web: ...
+- Nen tang dich: prompt va settings phu hop; chi them variant khac khi user can
 - Grok Imagine: ...
 - OpenClaw / Hermes / Codex / OhMyPi: ...
 
@@ -140,19 +157,19 @@ OPTIONAL SHORT
 [ban 50-90 tu neu user can prompt ngan]
 ```
 
-Doc `references/platform-map.md` de chinh variant. Khong viet 7 ban dai giong nhau. Chi khac lenh boc + do dai.
+Doc `references/platform-map.md` de chinh variant. Khong viet 7 ban dai giong nhau. Dieu chinh thu tu, muc chi tiet, reference workflow va constraints theo nen tang; khong chi doi wrapper. Flow/Nano Banana: doc `references/flow-nano-banana.md`.
 
 ### 2c. JSON standalone cho nhieu anh
 
 Neu user muon tao `n` anh, muon copy tung prompt vao nen tang, hoac bao mot JSON nhieu anh bi render thanh triptych/collage:
 
-- Doc `references/standalone-json.md`.
-- Tao `n` JSON object doc lap; moi object co mot `image_id`, `output.image_count: 1`, mot scene, mot `prompt`, va mot `negative_prompt`.
+- Uu tien `n` prompt phang rieng tren web UI. Chi doc `references/standalone-json.md` va tao JSON khi user yeu cau format do.
+- Neu xuat JSON, tao `n` JSON object doc lap; moi object co mot `image_id`, `output.image_count: 1`, mot scene, mot `prompt`, va mot `negative_prompt`.
 - Khong dung mot root `image_prompt_set` voi `images` array lam artifact copy/paste chinh. Neu can manifest, dat no sau cac object doc lap va noi ro no chi la muc luc.
 - Viet prompt tu du trong moi object. Khong dung cac cau tham chieu chua du thong tin nhu `same character defined in the consistency lock` neu lock do nam ngoai object.
-- Dat guardrail o dau va cuoi `prompt`: mot anh, mot scene, mot canvas lien tuc; khong triptych, collage, contact sheet, storyboard, grid, split-screen, inset panel, hoac alternate views.
+- Dung mot rang buoc ngan `One photograph, no text` va image-count trong UI. Chi them `no collage` khi gap loi panel; khong lap guardrail dai o dau va cuoi.
 - Neu user muon giu cung khuon mat, giai thich rang text/seed/session khong dam bao mat giong tuyet doi. Uu tien tao mot master reference image roi dinh kem cung anh do cho cac lan sau; giu cung model, wardrobe, makeup va settings khi co the.
-- Neu user chi ro Grok hoac gioi han do dai, xuat compact standalone JSON voi `image_id`, `task`, `output`, `prompt`, `negative_prompt`; cat metadata giai thich truoc, khong cat cac hero details.
+- Neu user yeu cau JSON va chi ro Grok hoac gioi han do dai, xuat compact standalone JSON voi `image_id`, `task`, `output`, `prompt`, `negative_prompt`; cat metadata giai thich truoc, khong cat cac hero details.
 
 ### 2a. Platform safety va xu ly tu choi
 
@@ -237,8 +254,8 @@ Neu user khong dien mot truong, giu gia tri `AUTO` va infer o buoc final. Neu us
 - Neckline. User noi "deep-V hoac V-neck" thi chon mot (mac dinh deep V neu ho xin sexy; classic V neu ho xin clean) va ghi ro do sau (to sternum / modest V). Khong doi neckline user da chot.
 - Khong tu them body measurements. Neu user da cho 90-60-90 hoac ty le cu the, giu y do trong `Intent Lock` va co the viet lai thanh silhouette tu nhien trong FLAT PROMPT.
 - Mo ta vat lieu theo thu tu: chat lieu -> cau truc weave/knit -> huong soi/mui -> tension/fold -> phan xa anh sang. Khong viet "tung soi vai" neu khung hinh qua xa de thay.
-- Goc may phai co it nhat camera height, yaw/pitch hoac viewpoint, lens va crop. Neu chi noi portrait, dung 85mm nhung van chon camera height va crop hop ly.
-- Mau anh phai co palette, white balance, saturation/contrast va skin-tone handling; khong chi ghi "cinematic" hoac "beautiful colors".
+- Chon crop va viewpoint ro; chi them lens/camera height/yaw/pitch khi chung thuc su giup bo cuc. Tranh thong so may anh day dac tren Flow/Grok. Neu chi noi portrait, chon crop va viewpoint hop ly; lens la tuy chon.
+- Mau anh can palette va skin-tone handling phu hop; chi them white balance/saturation/contrast khi can; khong chi ghi "cinematic" hoac "beautiful colors".
 - Khong ghi ultra 8K RAW, masterpiece, best quality. Neu user yeu cau syntax cua mot platform, giu syntax do o wrapper tuong ung.
 - Snapshot dien thoai: them slight noise, phone look. Studio: clean wall and controlled light; use 85mm for a portrait crop or 50-85mm for full-body.
 
@@ -264,4 +281,4 @@ Khong nhoi 6 o mot prompt. Xuat:
 
 ## Sau khi giao prompt
 
-Dung. Cho user sua o Infer. Chi gen anh khi ho bao gen. Neu user chua xin gen, khong goi image generation tool.
+Dung. Cho user sua o Infer. Chi gen anh khi user yeu cau tao anh hoac da uy quyen thu truc tiep tren nen tang. Neu user chua xin gen, khong goi image generation tool.
