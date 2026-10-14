@@ -1,6 +1,8 @@
 # Bổ sung motion và social content — v1.1, 2026-10-09
 Phối hợp MCP Gemini3.8FlashHigh, Codex biên tập. **CANDIDATE UNTESTED**: chưa chứng minh cải thiện độ ổn định. Đọc phần này trước các mẫu cycling cũ của v1.0 khi làm Linh đô thị.
 
+Dance có vũ đạo, yoga đổi pose và đạp xe có vòng chân: đọc [motion-transfer.md](motion-transfer.md) trước. Các mẫu C-R và D-R ở đây là fallback chữ khi surface không nhận video mẫu. Fashion và social không đi qua module đó.
+
 ## Quy tắc chọn và chuẩn bị
 - Chốt mục tiêu clip: action nào phải nhìn thấy, ảnh nào mang identity, phần nào dựng sau. Mỗi clip một hành động chính + một hành vi camera; động tác chân/thân/tay phối hợp trong cùng hành động không cần tách thành nhiều shot.
 - Mẫu I2V bên dưới chỉ dùng sau khi ảnh đầu đúng pose/góc/props đã QA. Chuẩn bị ảnh trực tiếp từ reference đã duyệt, giữ body/outfit user chốt. Dance/fashion/social dùng outfit/location riêng đã chốt, không tự áp croptop Linh.

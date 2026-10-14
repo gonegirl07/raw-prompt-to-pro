@@ -18,6 +18,8 @@ Give the agent a rough line such as:
 
 It returns Intent lock, Flat prompt (English), Negative, and short platform wrappers. When the user provides JSON or asks for a structured brief, it can also return a `PRODUCTION SPEC` with `metadata`, `image_parameters`, and `raw_prompt`. It does not generate an image unless you ask.
 
+For Google Flow video, dance, yoga, and cycling use motion transfer when a reference clip can be attached. Text-only motion samples are the fallback. See `references/motion-transfer.md`. The skill does not generate video unless you ask.
+
 When a target platform is known, or a user reports a refusal, it also applies the platform safety reference. It keeps valid creative details, neutralizes sexualized wording that can create false positives, avoids repeating sensitive terms in negative prompts for stricter UIs, and produces a bounded `SAFE RETRY PROMPT` without attempting to bypass guardrails.
 
 ## Modes

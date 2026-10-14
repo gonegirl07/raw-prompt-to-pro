@@ -3,9 +3,11 @@ Phiên bản 1.0 • 2026-10-08 • Phối hợp Gemini 3.8 Flash (High), biên 
 
 **Ứng viên chưa thử:** bộ này cải thiện cách viết và chuẩn bị, chưa chứng minh sửa được cadence, rolling hay drift Run19. Prompt trong code block để paste riêng từng cảnh. Không paste toàn bộ tài liệu vào generation.
 
+Bổ sung 2026-10-14: dance có vũ đạo, yoga đổi pose và đạp xe có vòng chân không viết thêm chữ để khóa động tác. Nếu Flow UI gắn được video mẫu, đọc [motion-transfer.md](motion-transfer.md) trước. C1–C3, Y1–Y3 và D1–D3 bên dưới chỉ là fallback khi không gắn được video. Chưa test trên canvas.
+
 Bổ sung 2026-10-12 từ thư viện Muse do user cung cấp: giữ các nguyên tắc mô tả chuyển động quan sát được, full-body/weight transfer cho dance và một camera operation; loại các magic phrase, slash command, BPM và lời hứa consistency chưa được xác minh. Xem phần đối chiếu nguồn trong `flow-video-research.md`.
 
-Bổ sung 2026-10-09: đọc [MOTION-SOCIAL-KIT.md](MOTION-SOCIAL-KIT.md) cho 12 candidate cycling/dance/fashion/social và Facebook/TikTok production; đọc [STABILITY-TEST-PLAN.md](STABILITY-TEST-PLAN.md) khi kiểm độ ổn định. Với Linh đô thị, ưu tiên front3/4 theo feedback mới; C1 sideview bên dưới là lịch sử, không còn mặc định cho task đó. Run26 chỉ cải thiện tự nhiên một phần, Run28 vẫn chậm; chưa có motion quality pass. Các run20–28 đã xác minh có thể để text locks/notes blank, nhưng motion-only vẫn fail nên không coi adapter này là giải pháp.
+Bổ sung 2026-10-09: đọc [motion-social-kit.md](motion-social-kit.md) cho 12 candidate cycling/dance/fashion/social và Facebook/TikTok production; đọc [video-stability-test-plan.md](video-stability-test-plan.md) khi kiểm độ ổn định. Với Linh đô thị, ưu tiên front3/4 theo feedback mới; C1 sideview bên dưới là lịch sử, không còn mặc định cho task đó. Run26 chỉ cải thiện tự nhiên một phần, Run28 vẫn chậm; chưa có motion quality pass. Các run20–28 đã xác minh có thể để text locks/notes blank, nhưng motion-only vẫn fail nên không coi adapter này là giải pháp.
 
 ## Cách dùng và giữ nhân vật
 
@@ -171,5 +173,5 @@ Ghép nhạc có file dùng được. Unity đã có file user cung cấp cho cy
 
 Vòng thử có giá trị: cùngảnh/model/settings, đổi đúng một yếu tố. Với canvas, so bảnmotiongọn và bảnautoappendlocks khi UI cho phép cấu hình thật; chưa thực hiện A/B này. Nếu lặp lỗi chậm, cân nhắc model/mode được hỗ trợ, không chỉ đổi từ đồng nghĩafast. Mọi video test Linh theo canvas.
 
-Lưu assetIDs, prompt đã ghép, plannedsettings và verifiedmetadata riêng; contactreview +feedback. Bộ mẫu mới chưa sinh media/tiêu credits. Nguồn repo và giới hạn xem RESEARCH.md.
+Lưu assetIDs, prompt đã ghép, plannedsettings và verifiedmetadata riêng; contactreview +feedback. Bộ mẫu mới chưa sinh media/tiêu credits. Nguồn repo và giới hạn xem [flow-video-research.md](flow-video-research.md).
 

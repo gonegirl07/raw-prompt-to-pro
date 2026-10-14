@@ -54,3 +54,21 @@ Nguồn nhập: `C:\Users\Huy\Downloads\google-flow-prompt-library.md`. Đây l�
 - `keep the face and outfit exactly consistent` là yêu cầu, không phải bảo đảm. Asset phải gắn thật và kết quả phải được QA đầu/giữa/cuối.
 - Negative prompt dài có thể tranh chấp attention và không thay thế positive motion. Chỉ thêm constraints ngắn, gắn với lỗi cần tránh và khi surface hỗ trợ.
 - Nguồn cộng đồng, Facebook reel, tool thương mại và blog bên thứ ba trong thư viện là đầu mối nghiên cứu; không coi các claim của chúng là verified facts nếu chưa mở và đối chiếu.
+
+## Motion transfer — 2026-10-14
+
+Đối chiếu X và tài liệu Omni/Flow sau khi mẫu chữ dance/yoga/cycling không khóa được động tác phức tạp. Chưa chạy trên canvas Linh.
+
+Đã nhận vào [motion-transfer.md](motion-transfer.md):
+
+- Trên Flow UI, video mẫu giữ timing và động tác; ảnh giữ mặt và outfit; prompt chỉ phân vai và giữ ngắn. Nguồn chính: bài green-screen của @FlowbyGoogle (2026-08-07) và tag `<VIDEO_REF_0>` của Philipp Schmid (2026-08-27).
+- Đạp xe đi hai bước: stand-in trung tính có vòng pedal thật, rồi video-to-video thay người. Không dùng RPM trong chữ làm metadata tốc độ.
+- Yoga không có clip thì một cặp first/last frame, một chuyển pose. Pose sheet nhiều ô là giả thuyết mượn từ workflow model khác, chưa thử trên Omni.
+- API ghi video reference khoảng 3 giây và bỏ audio. UI Flow có thể khác. Không chép một trong hai thành luật cho mọi surface.
+- Canvas chỉ first frame thì không gọi là motion transfer. Fallback vẫn là mẫu chữ trong kit.
+
+Chưa nhận:
+
+- Slash command camera trên X không phải choreography.
+- Không có agent skill công khai nào đã benchmark dance/yoga/cycling trên Omni của canvas này.
+- Test YouTube cộng đồng chỉ là đầu mối, không phải pass của task Linh.

@@ -1,9 +1,9 @@
 ---
 name: raw-prompt-to-pro
-description: Nang cap prompt tao anh da nen tang va prompt video Google Flow cho cycling, yoga, dance, fashion; dung anh tham chieu de giu nhan vat, tach prompt anh dau va motion. Xuat prompt phang paste-ready, JSON khi duoc yeu cau. Khong tu gen media khi chi xin prompt.
+description: Nang cap prompt tao anh da nen tang va prompt video Google Flow cho cycling, yoga, dance, fashion; dung anh tham chieu de giu nhan vat. Dance, yoga doi pose va dap xe uu tien motion transfer khi Flow gan duoc video mau; mau chu chi la fallback. Xuat prompt phang paste-ready, JSON khi duoc yeu cau. Khong tu gen media khi chi xin prompt.
 metadata:
   type: workflow
-  version: "1.9"
+  version: "1.10"
   output: flat-prompt-and-optional-production-spec
 ---
 
@@ -19,9 +19,11 @@ Muc tieu la chuyen mot prompt tho thanh mot brief co the dung ngay: co chu the r
 
 Khi user xin prompt video Flow, image-to-video, continuity nhan vat, cycling/yoga/dance/fashion: doc [references/flow-video-prompt-kit.md](references/flow-video-prompt-kit.md). Doc [references/flow-video-research.md](references/flow-video-research.md) khi can nguon repo, doi chieu model/mode hoac phan biet kinh nghiem voi du kien. Phan video nay khong dung pipeline 10 lop tao anh ben duoi cho motion prompt.
 
-Khi can cung co motion dance/fashion/cycling hoac lam footage Facebook Reels/TikTok, doc [references/motion-social-kit.md](references/motion-social-kit.md): prerequisites, 12 motion candidates va lop hook/action/payoff/CTA ngoai generation. Khi user bao ket qua khong on dinh hoac yeu cau test, doc [references/video-stability-test-plan.md](references/video-stability-test-plan.md). Day la ung vien chua test, khong coi research/loi agent la motion pass. Khong suy tran model hoac nguyen nhan kien truc tu cac run fail; khong dung montage/speedup/nhac de chung minh sua cadence. Uu tien feedback va asset that cua task, khong ap outfit/goc Linh cho category khac.
+Dance co vu dao, yoga doi pose, va dap xe can vong chan: doc [references/motion-transfer.md](references/motion-transfer.md) truoc moi mau chu. Neu surface la flow.google.com va gan duoc video mau (Ingredients / video-to-video), xuat ke hoach asset va prompt ngan phan vai; khong viet them choreography dai de khoa dong tac. Mau chu trong flow-video-prompt-kit va motion-social-kit chi la fallback khi khong gan duoc video, hoac khi clip chi can mot dong tac don da co san trong kit. Module transfer van la ung vien chua test, khong phai motion pass.
 
-- Chon surface/model/mode that; canvas firstFrame khong tu dong co ingredients, end frame hay motion reference. Khong bia API/payload.
+Khi motion-transfer khong ap dung, hoac can fashion/social va footage Facebook Reels/TikTok, doc [references/motion-social-kit.md](references/motion-social-kit.md): prerequisites, 12 motion candidates va lop hook/action/payoff/CTA ngoai generation. Khi user bao ket qua khong on dinh hoac yeu cau test, doc [references/video-stability-test-plan.md](references/video-stability-test-plan.md). Day la ung vien chua test, khong coi research/loi agent la motion pass. Khong suy tran model hoac nguyen nhan kien truc tu cac run fail; khong dung montage/speedup/nhac de chung minh sua cadence. Uu tien feedback va asset that cua task, khong ap outfit/goc Linh cho category khac.
+
+- Chon surface/model/mode that truoc khi viet. flow.google.com co the gan anh nhan vat va video motion; canvas Linh da quan sat chi gui firstFrame, khong tu dong co ingredients, end frame hay motion reference. Khong coi canvas la Flow UI. Khong bia API/payload. Tran do dai video reference phai doc o UI/tai lieu dang mo, khong doan: tag API Omni da ghi VIDEO_REF toi da khoang 3 giay va bo audio; UI Flow co the khac.
 - Anh dau/reference chua identity va outfit. I2V uu tien motion, contact points va mot camera operation; khong lap mo ta ngoai hinh dai mac dinh. Text-only scene/reference brief van can chi tiet tu du.
 - Tao mot prompt rieng moi clip, prerequisite pose/goc/asset ngoai prompt; settings va timeline bien tap ngoai prompt. Giữ intent/body/outfit user chot, khong tu dien so do.
 - Mau trong bo kit la ung vien chua test, khong hua face-lock, cadence, beat-sync hay chat luong. Danh gia bang media that va feedback; khong coi tu 'fast' hoac RPM la bang chung.
